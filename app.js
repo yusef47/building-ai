@@ -212,7 +212,8 @@ async function detectBuildings() {
         return;
     }
 
-    const threshold = parseFloat(document.getElementById("threshold").value) || 0.3;
+    const threshold = parseFloat(document.getElementById("threshold").value) || 0.5;
+    const useV51 = document.getElementById("v51-toggle")?.checked || false;
     const btn = document.getElementById("detect-btn");
     const progressContainer = document.getElementById("progress-container");
     const progressFill = document.getElementById("progress-fill");
@@ -254,6 +255,7 @@ async function detectBuildings() {
             body: JSON.stringify({
                 coordinates: drawnCoords,
                 threshold: threshold,
+                use_v51: useV51,
             }),
         });
 
