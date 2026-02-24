@@ -138,10 +138,13 @@ function initMap() {
 
         drawnCoords = coords;
         document.getElementById("detect-btn").disabled = false;
-        setStatus("ready", `✅ ${coords.length} نقاط — اضغط "كشف المباني"`);
+        setStatus("ready", `✅ ${coords.length} نقاط — جاري الكشف تلقائياً...`);
 
         // Estimate tile count
         estimateTiles(coords);
+
+        // ── Auto-detect on draw ──
+        setTimeout(() => detectBuildings(), 300);
     });
 
     map.on("draw:deleted", () => {
@@ -213,7 +216,7 @@ async function detectBuildings() {
     }
 
     const threshold = parseFloat(document.getElementById("threshold").value) || 0.5;
-    const useV51 = document.getElementById("v51-toggle")?.checked || false;
+    const useV51 = true; // V5.1 always enabled
     const btn = document.getElementById("detect-btn");
     const progressContainer = document.getElementById("progress-container");
     const progressFill = document.getElementById("progress-fill");
@@ -248,7 +251,15 @@ async function detectBuildings() {
 
         setStatus("processing", "🔍 جاري تحليل صور الأقمار الصناعية...");
 
-        // Call API
+        // Wake-up message if server takes long to respond
+        const wakeUpMsg = setTimeout(() => {
+            setStatus("processing", "⏳ جاري تشغيل الخادم (قد يستغرق 30-60 ثانية)...");
+        }, 10000);
+
+        // Call API — timeout 500 seconds (analysis can take long)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 500000);
+
         const response = await fetch(`${API_URL}/detect`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -257,7 +268,11 @@ async function detectBuildings() {
                 threshold: threshold,
                 use_v51: useV51,
             }),
+            signal: controller.signal,
         });
+
+        clearTimeout(wakeUpMsg);
+        clearTimeout(timeoutId);
 
         clearInterval(progressInterval);
 
