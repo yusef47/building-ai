@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏗️ BuildingAI — كشف المباني بالذكاء الاصطناعي</title>
-    <meta name="description" content="اكتشف المباني من صور الأقمار الصناعية باستخدام الذكاء الاصطناعي. ارسم منطقة على الخريطة واحصل على النتائج فوراً.">
+    <meta name="description"
+        content="اكتشف المباني من صور الأقمار الصناعية باستخدام الذكاء الاصطناعي. ارسم منطقة على الخريطة واحصل على النتائج فوراً.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -17,6 +21,7 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- ========== HERO SECTION ========== -->
     <section id="hero">
@@ -151,10 +156,6 @@
                             🎚️ الحد الأدنى:
                             <input id="threshold" type="number" value="0.5" min="0.1" max="0.9" step="0.05">
                         </label>
-                        <label class="threshold-label" style="margin-top:6px; cursor:pointer;">
-                            <input id="v51-toggle" type="checkbox" style="accent-color:#00d4ff; width:16px; height:16px; margin-left:4px;">
-                            🧠 V5.1 (SAM + SigLIP)
-                        </label>
                         <div id="tile-estimate" class="tile-estimate"></div>
                     </div>
                 </div>
@@ -277,5 +278,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
     <script src="app.js"></script>
 </body>
-</html>
 
+</html>
